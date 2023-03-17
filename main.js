@@ -1,5 +1,9 @@
-const oldCalculation = document.getElementById("oc").innerText;
-const currentCalculation = document.getElementById("cc").innerText;
+let oldCalculation = document.getElementById("oc").innerText;
+let currentCalculation = document.getElementById("cc");
+let currentValueA;
+let currentOperator;
+let currentValueB;
+let currentResult;
 const btn1 = document.getElementById("1");
 const btn2 = document.getElementById("2");
 const btn3 = document.getElementById("3");
@@ -19,4 +23,55 @@ const btnDot = document.getElementById("dot");
 const btnClear = document.getElementById("ac");
 const btnEnter = document.getElementById("enter");
 
-let displayValue;
+const btnNumber = document.querySelectorAll(".number");
+const btnOperator = document.querySelectorAll(".operators");
+
+const add = function (a, b) {
+  return a + b;
+};
+
+const subtract = function (a, b) {
+  return a - b;
+};
+
+const multiply = function (a, b) {
+  return a * b;
+};
+
+const divide = function (a, b) {
+  return a / b;
+};
+
+const operate = function (x, a, b) {
+  return x;
+};
+
+// do {
+//   for (let i = 0; i < btnNumber.length; i++) {
+//     btnNumber[i].addEventListener("click", () => {
+//       currentCalculation.innerText += parseInt(btnNumber[i].innerText);
+//       currentValueA = currentCalculation.innerText;
+//     });
+//   }
+// } while (currentValueA === undefined);
+
+// do {
+//   for (let i = 0; i < btnNumber.length; i++) {
+//     btnNumber[i].addEventListener("click", () => {
+//       currentCalculation.innerText += parseInt(btnNumber[i].innerText);
+//       currentValueB = currentCalculation.innerText;
+//     });
+//   }
+// } while (currentValueB === undefined);
+
+// for (let i = 0; i < btnOperator.length; i++) {
+//   btnOperator[i].addEventListener("click", () => {
+//     currentCalculation.innerText += btnOperator.innerText;
+//     currentValueA = currentValueB;
+//     currentValueB = undefined;
+//     console.log("A2", currentValueA);
+//     console.log("B2", currentValueB);
+//   });
+// }
+
+// btnEnter.addEventListener("click", () => {});
