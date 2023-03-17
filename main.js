@@ -1,77 +1,54 @@
-let oldCalculation = document.getElementById("oc").innerText;
+const btnNumber = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+const btnOperator = ["add", "subtract", "multiply", "divide"];
+const btnEqual = document.getElementById("equal");
 let currentCalculation = document.getElementById("cc");
-let currentValueA;
-let currentOperator;
-let currentValueB;
-let currentResult;
-const btn1 = document.getElementById("1");
-const btn2 = document.getElementById("2");
-const btn3 = document.getElementById("3");
-const btn4 = document.getElementById("4");
-const btn5 = document.getElementById("5");
-const btn6 = document.getElementById("6");
-const btn7 = document.getElementById("7");
-const btn8 = document.getElementById("8");
-const btn9 = document.getElementById("9");
-const btn0 = document.getElementById("0");
-const btnPlus = document.getElementById("plus");
-const btnMinus = document.getElementById("minus");
-const btnMultiply = document.getElementById("multiply");
-const btnDivide = document.getElementById("divide");
-const btnSwap = document.getElementById("swap");
-const btnDot = document.getElementById("dot");
-const btnClear = document.getElementById("ac");
-const btnEnter = document.getElementById("enter");
+let valA;
+let valB;
+let valOp;
+let valEq;
 
-const btnNumber = document.querySelectorAll(".number");
-const btnOperator = document.querySelectorAll(".operators");
-
-const add = function (a, b) {
+function add(a, b) {
   return a + b;
-};
-
-const subtract = function (a, b) {
+}
+function subtract(a, b) {
   return a - b;
-};
-
-const multiply = function (a, b) {
+}
+function multiply(a, b) {
   return a * b;
-};
-
-const divide = function (a, b) {
+}
+function divide(a, b) {
   return a / b;
-};
+}
 
-const operate = function (x, a, b) {
-  return x;
-};
+function operate(operator, a, b) {
+  if (operator === "+") {
+    return add(a, b);
+  } else if (operator === "-") {
+    return subtract(a, b);
+  } else if (operator === "*") {
+    return multiply(a, b);
+  } else if (operator === "/") {
+    return divide(a, b);
+  }
+}
 
-// do {
-//   for (let i = 0; i < btnNumber.length; i++) {
-//     btnNumber[i].addEventListener("click", () => {
-//       currentCalculation.innerText += parseInt(btnNumber[i].innerText);
-//       currentValueA = currentCalculation.innerText;
-//     });
-//   }
-// } while (currentValueA === undefined);
+function handler() {}
 
-// do {
-//   for (let i = 0; i < btnNumber.length; i++) {
-//     btnNumber[i].addEventListener("click", () => {
-//       currentCalculation.innerText += parseInt(btnNumber[i].innerText);
-//       currentValueB = currentCalculation.innerText;
-//     });
-//   }
-// } while (currentValueB === undefined);
+btnNumber.forEach(function (x) {
+  const number = document.getElementById(x);
+  number.addEventListener("click", () => {
+    currentCalculation.innerText += number.innerText;
+  });
+});
 
-// for (let i = 0; i < btnOperator.length; i++) {
-//   btnOperator[i].addEventListener("click", () => {
-//     currentCalculation.innerText += btnOperator.innerText;
-//     currentValueA = currentValueB;
-//     currentValueB = undefined;
-//     console.log("A2", currentValueA);
-//     console.log("B2", currentValueB);
-//   });
-// }
+btnOperator.forEach((x) => {
+  const operator = document.getElementById(x);
+  operator.addEventListener("click", () => {
+    currentCalculation.innerText += operator.innerText;
+  });
+});
 
-// btnEnter.addEventListener("click", () => {});
+btnEqual.addEventListener("click", () => {
+  handler();
+  currentCalculation.innerText += btnEqual.innerText;
+});
