@@ -2,14 +2,11 @@ const btnNumber = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 const btnOperator = ["add", "subtract", "multiply", "divide"];
 const btnEqual = document.getElementById("equal");
 const btnDot = document.getElementById("dot");
+const btnAC = document.getElementById("ac");
+const btnSwap = document.getElementById("swap");
 let currentCalculation = document.getElementById("cc");
 let ccText = currentCalculation.innerText;
 let oldCalculation = document.getElementById("oc");
-let valA;
-let valB;
-let valOp;
-let valEq;
-// let output;
 
 const add = function (a, b) {
   return a + b;
@@ -103,4 +100,9 @@ btnEqual.addEventListener("click", () => {
 
 btnDot.addEventListener("click", () => {
   currentCalculation.innerText += ".";
+});
+
+btnAC.addEventListener("click", () => {
+  currentCalculation.innerText = "";
+  oldCalculation.innerText = "";
 });
