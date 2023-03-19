@@ -1,13 +1,15 @@
 const btnNumber = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 const btnOperator = ["add", "subtract", "multiply", "divide"];
 const btnEqual = document.getElementById("equal");
+const btnDot = document.getElementById("dot");
 let currentCalculation = document.getElementById("cc");
+let ccText = currentCalculation.innerText;
 let oldCalculation = document.getElementById("oc");
 let valA;
 let valB;
 let valOp;
 let valEq;
-let output;
+// let output;
 
 const add = function (a, b) {
   return a + b;
@@ -39,25 +41,27 @@ function handler() {
   let arr1;
   let arr2;
   let temp = currentCalculation.innerText;
+  let output;
   if (temp.includes("+")) {
     arr = temp.split("+");
-    arr1 = parseInt(arr[0]);
-    arr2 = parseInt(arr[1]);
+    arr1 = parseFloat(arr[0]);
+    arr2 = parseFloat(arr[1]);
+
     return (output = operate("+", arr1, arr2));
   } else if (temp.includes("-")) {
     arr = temp.split("-");
-    arr1 = parseInt(arr[0]);
-    arr2 = parseInt(arr[1]);
+    arr1 = parseFloat(arr[0]);
+    arr2 = parseFloat(arr[1]);
     return (output = operate("-", arr1, arr2));
   } else if (temp.includes("*")) {
     arr = temp.split("*");
-    arr1 = parseInt(arr[0]);
-    arr2 = parseInt(arr[1]);
+    arr1 = parseFloat(arr[0]);
+    arr2 = parseFloat(arr[1]);
     return (output = operate("*", arr1, arr2));
   } else if (temp.includes("/")) {
     arr = temp.split("/");
-    arr1 = parseInt(arr[0]);
-    arr2 = parseInt(arr[1]);
+    arr1 = parseFloat(arr[0]);
+    arr2 = parseFloat(arr[1]);
     return (output = operate("/", arr1, arr2));
   }
 }
@@ -81,11 +85,22 @@ btnNumber.forEach(function (x) {
 btnOperator.forEach((x) => {
   const operator = document.getElementById(x);
   operator.addEventListener("click", () => {
+    if (
+      currentCalculation.innerText.includes("+") ||
+      currentCalculation.innerText.includes("-") ||
+      currentCalculation.innerText.includes("*") ||
+      currentCalculation.innerText.includes("/")
+    ) {
+      equalResult();
+    }
     currentCalculation.innerText += operator.innerText;
-    equalResult();
   });
 });
 
 btnEqual.addEventListener("click", () => {
   equalResult();
+});
+
+btnDot.addEventListener("click", () => {
+  currentCalculation.innerText += ".";
 });
