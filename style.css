@@ -79,15 +79,13 @@ body {
   grid-row-start: 1;
 }
 
-.operators {
+.btn-style {
   background-color: rgba(217, 159, 88, 0.935);
 }
-
-.operators:hover {
+.btn-style:hover {
   background-color: rgba(217, 159, 88, 0.9);
 }
-
-.operators:active {
+.btn-style:active {
   background-color: rgb(216, 144, 57);
 }
 

@@ -1,15 +1,13 @@
-const btnNumber = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
-const btnOperator = ["add", "subtract", "multiply", "divide"];
-const btnEqual = document.getElementById("equal");
-const btnDot = document.getElementById("dot");
-const btnAC = document.getElementById("ac");
-const btnSwap = document.getElementById("swap");
-let currentCalculation = document.getElementById("cc");
-let oldCalculation = document.getElementById("oc");
+const number = document.querySelectorAll('.number');
+const operator = document.querySelectorAll('.operator');
+const equal = document.querySelector('.equal');
+const swap = document.getElementById('swap');
+let currentCalculation = document.getElementById('cc');
+let oldCalculation = document.getElementById('oc');
 const valueHold = {
-  numberOne: "",
-  numberTwo: "",
-  result: "",
+  numberOne: '',
+  numberTwo: '',
+  result: '',
 };
 
 function add(a, b) {
@@ -26,55 +24,68 @@ function divide(a, b) {
 }
 
 function operate(operator, a, b) {
-  if (operator === "+") {
-    return add(a, b);
-  } else if (operator === "-") {
-    return subtract(a, b);
-  } else if (operator === "*") {
-    return multiply(a, b);
-  } else if (operator === "/") {
-    return divide(a, b);
+  switch (operator) {
+    case '+':
+      return add(a, b);
+    case '-':
+      return subtract(a, b);
+    case '*':
+      return multiply(a, b);
+    case '/':
+      return divide(a, b);
   }
 }
 
-btnNumber.forEach(function (x) {
-  const number = document.getElementById(x);
-  number.addEventListener("click", () => {
-    currentCalculation.innerText += number.innerText;
-    if (valueHold.hasOwnProperty("operatorType") === false) {
-      valueHold.numberOne += number.innerText;
-    } else if (valueHold.hasOwnProperty("operatorType") === true) {
-      valueHold.numberTwo += number.innerText;
+function swapper(x) {
+  if (x > 0) {
+    return -x;
+  } else if (x < 0) {
+    return Math.abs(x);
+  }
+}
+
+number.forEach((button) => {
+  button.addEventListener('click', () => {
+    currentCalculation.innerText += button.innerText;
+    switch (valueHold.hasOwnProperty('operatorType')) {
+      case false:
+        valueHold.numberOne += button.innerText;
+        break;
+      case true:
+        valueHold.numberTwo += button.innerText;
+        break;
     }
   });
 });
 
-btnOperator.forEach((x) => {
-  const operator = document.getElementById(x);
-  operator.addEventListener("click", () => {
-    if (valueHold.hasOwnProperty("operatorType") === false) {
-      currentCalculation.innerText += operator.innerText;
-      valueHold.operatorType = operator.innerText;
-    } else {
-      equalize();
-      updateDisplay();
-      currentCalculation.innerText += operator.innerText;
+operator.forEach((button) => {
+  button.addEventListener('click', () => {
+    switch (valueHold.hasOwnProperty('operatorType')) {
+      case false:
+        valueHold.operatorType = button.innerText;
+        currentCalculation.innerText += button.innerText;
+        break;
+      case true:
+        equalize();
+        updateDisplay();
+        valueHold.operatorType = button.innerText;
+        currentCalculation.innerText += button.innerText;
+        console.log(valueHold.operatorType);
+        break;
     }
   });
 });
 
 function updateDisplay() {
   oldCalculation.innerText = currentCalculation.innerText;
-  currentCalculation.innerText = "";
+  currentCalculation.innerText = '';
   currentCalculation.innerText += valueHold.result;
-  valueHold.numberOne = "";
   valueHold.numberOne = valueHold.result;
-  valueHold.numberTwo = "";
-  valueHold.result = "";
+  valueHold.numberTwo = '';
 }
 
 function equalize() {
-  if (valueHold.hasOwnProperty("operatorType") === true) {
+  if (valueHold.hasOwnProperty('operatorType') === true) {
     valueHold.result = operate(
       valueHold.operatorType,
       parseFloat(valueHold.numberOne),
@@ -83,7 +94,15 @@ function equalize() {
   }
 }
 
-btnEqual.addEventListener("click", () => {
+equal.addEventListener('click', () => {
   equalize();
   updateDisplay();
+});
+
+swap.addEventListener('click', () => {
+  if (valueHold.numberOne !== '') {
+    swapper(valueHold.numberOne);
+  } else if (valueHold.numberTwo !== '' && valueHold.numberOne !== '') {
+    swapper(valueHold.numberTwo);
+  }
 });
