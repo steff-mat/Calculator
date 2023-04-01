@@ -1,7 +1,11 @@
+'use strict';
+
 const number = document.querySelectorAll('.number');
 const operator = document.querySelectorAll('.operator');
 const equal = document.querySelector('.equal');
 const swap = document.getElementById('swap');
+const dot = document.getElementById('dot');
+const ac = document.getElementById('ac');
 let currentCalculation = document.getElementById('cc');
 let oldCalculation = document.getElementById('oc');
 const valueHold = {
@@ -36,12 +40,13 @@ function operate(operator, a, b) {
   }
 }
 
-function swapper(x) {
-  if (x > 0) {
-    return -x;
-  } else if (x < 0) {
-    return Math.abs(x);
-  }
+function disableDot() {
+  dot.addEventListener('click', () => {
+    dot.setAttribute('style', 'pointer-events: none;');
+  });
+}
+function enableDot() {
+  dot.setAttribute('style', 'pointer-events: auto;');
 }
 
 number.forEach((button) => {
@@ -50,9 +55,11 @@ number.forEach((button) => {
     switch (valueHold.hasOwnProperty('operatorType')) {
       case false:
         valueHold.numberOne += button.innerText;
+        disableDot();
         break;
       case true:
         valueHold.numberTwo += button.innerText;
+        disableDot();
         break;
     }
   });
@@ -60,6 +67,7 @@ number.forEach((button) => {
 
 operator.forEach((button) => {
   button.addEventListener('click', () => {
+    enableDot();
     switch (valueHold.hasOwnProperty('operatorType')) {
       case false:
         valueHold.operatorType = button.innerText;
@@ -70,7 +78,7 @@ operator.forEach((button) => {
         updateDisplay();
         valueHold.operatorType = button.innerText;
         currentCalculation.innerText += button.innerText;
-        console.log(valueHold.operatorType);
+        infinity();
         break;
     }
   });
@@ -91,18 +99,72 @@ function equalize() {
       parseFloat(valueHold.numberOne),
       parseFloat(valueHold.numberTwo)
     );
+    delete valueHold['operatorType'];
   }
 }
 
 equal.addEventListener('click', () => {
+  enableDot();
   equalize();
   updateDisplay();
+  infinity();
 });
 
 swap.addEventListener('click', () => {
-  if (valueHold.numberOne !== '') {
-    swapper(valueHold.numberOne);
-  } else if (valueHold.numberTwo !== '' && valueHold.numberOne !== '') {
-    swapper(valueHold.numberTwo);
+  if (valueHold.numberOne.length < 1 && valueHold.numberTwo.length < 1) {
+    currentCalculation.innerText += swap.innerText;
+    valueHold.numberOne += swap.innerText;
+    disableDot();
+  } else if (
+    valueHold.numberOne === '' &&
+    valueHold.hasOwnProperty('operatorType') === true
+  ) {
+    currentCalculation.innerText += swap.innerText;
+    valueHold.numberTwo += swap.innerText;
+    disableDot();
+  } else if (
+    valueHold.numberOne !== '' &&
+    valueHold.hasOwnProperty('operatorType') === true
+  ) {
+    currentCalculation.innerText += swap.innerText;
+    valueHold.numberTwo += swap.innerText;
+    disableDot();
   }
 });
+
+ac.addEventListener('click', () => {
+  valueHold.numberOne = '';
+  delete valueHold['operatorType'];
+  valueHold.numberTwo = '';
+  valueHold.result = '';
+  currentCalculation.innerText = '';
+  oldCalculation.innerText = '';
+});
+
+function infinity() {
+  if (currentCalculation.innerText === 'Infinity') {
+    valueHold.numberOne = '';
+    delete valueHold['operatorType'];
+    valueHold.numberTwo = '';
+    valueHold.result = '';
+    currentCalculation.innerText = 'BAD IDEA BUDDY!';
+    oldCalculation.innerText = 'PRESS A/C!';
+    for (let num of number) {
+      num.setAttribute('style', 'pointer-events: none;');
+    }
+    for (let op of operator) {
+      op.setAttribute('style', 'pointer-events: none;');
+    }
+    equal.setAttribute('style', 'pointer-events: none;');
+    swap.setAttribute('style', 'pointer-events: none;');
+    dot.setAttribute('style', 'pointer-events: none;');
+  }
+}
+
+function rounding(x) {
+  Math.round(x * 100) / 100;
+}
+
+// do {
+//   equal.setAttribute('style', 'pointer-events: none;');
+// } while (valueHold.numberOne === '' && valueHold.operatorType === '');

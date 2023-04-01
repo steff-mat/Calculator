@@ -108,3 +108,11 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.disableDot {
+  pointer-events: none;
+}
+
+.enableDot {
+  pointer-events: auto;
+}
