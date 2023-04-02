@@ -6,6 +6,7 @@ const equal = document.querySelector('.equal');
 const swap = document.getElementById('swap');
 const dot = document.getElementById('dot');
 const ac = document.getElementById('ac');
+const c = document.getElementById('c');
 let currentCalculation = document.getElementById('cc');
 let oldCalculation = document.getElementById('oc');
 const valueHold = {
@@ -141,6 +142,14 @@ ac.addEventListener('click', () => {
   oldCalculation.innerText = '';
 });
 
+c.addEventListener('click', () => {
+  let opCheck = currentCalculation.innerText.split('').length - 1;
+  let temp = currentCalculation.innerText.split('');
+  temp.pop();
+  currentCalculation.innerText = temp.join('');
+  delete valueHold['operatorType'];
+});
+
 function infinity() {
   if (currentCalculation.innerText === 'Infinity') {
     valueHold.numberOne = '';
@@ -164,7 +173,3 @@ function infinity() {
 function rounding(x) {
   Math.round(x * 100) / 100;
 }
-
-// do {
-//   equal.setAttribute('style', 'pointer-events: none;');
-// } while (valueHold.numberOne === '' && valueHold.operatorType === '');
