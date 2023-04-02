@@ -143,7 +143,6 @@ ac.addEventListener('click', () => {
 });
 
 c.addEventListener('click', () => {
-  let opCheck = currentCalculation.innerText.split('').length - 1;
   let temp = currentCalculation.innerText.split('');
   temp.pop();
   currentCalculation.innerText = temp.join('');
